@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "jest"
+    "test": "jest --watchAll=false"
   },
   "dependencies": {
     "next": "^16.0.10",
