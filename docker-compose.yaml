@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: agora-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: agora_user
+      POSTGRES_PASSWORD: agora_password
+      POSTGRES_DB: agora
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
