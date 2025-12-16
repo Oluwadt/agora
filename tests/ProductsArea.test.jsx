@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ProductCard from "../app/components/ProductCard";
+import ProductCard from "../app/components/ProductsArea";
 
 describe("ProductCard Component", () => {
   const mockProducts = [
