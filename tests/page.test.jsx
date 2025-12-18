@@ -1,30 +1,29 @@
-// tests/page.test.jsx
 import { render, screen } from "@testing-library/react";
 import Home from "../app/page";
 
-jest.mock("../app/components/ProductCard", () => {
-  return function MockedProductCard() {
-    return <div data-testid="product-card-mock">Mock ProductCard</div>;
+jest.mock("../app/components/ProductsArea", () => {
+  return function MockProductsArea() {
+    return <section data-testid="products-area" />;
   };
 });
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () =>
-      Promise.resolve({
-        products: [
-          { id: 1, title: "Laptop", price: 1000, thumbnail: "laptop.jpg" }
-        ]
-      })
+      Promise.resolve([
+        { id: "1", name: "Laptop" },
+        { id: "2", name: "Phone" },
+      ]),
   })
 );
 
-describe("Home Page Integration Test", () => {
-  test("fetches products and renders ProductCard", async () => {
+describe("Home page", () => {
+  test("renders products area", async () => {
     const view = await Home();
     render(view);
 
-    expect(screen.getByText("Welcome to Agora")).toBeInTheDocument();
-    expect(screen.getByTestId("product-card-mock")).toBeInTheDocument();
+    expect(
+      screen.getByTestId("products-area")
+    ).toBeInTheDocument();
   });
 });
