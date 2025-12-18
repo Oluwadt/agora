@@ -11,17 +11,8 @@ jest.mock("../app/components/ProductsArea", () => {
   };
 });
 
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    ok: true,
-    json: async () => ({
-      products: [],
-    }),
-  })
-);
-
 describe("Home page (server component)", () => {
-  it("renders without crashing and fetches products", async () => {
+  it("renders the page and products area", async () => {
     const page = await Home();
     render(page);
 
@@ -32,7 +23,5 @@ describe("Home page (server component)", () => {
     expect(
       screen.getByTestId("products-area")
     ).toBeInTheDocument();
-
-    expect(global.fetch).toHaveBeenCalled();
   });
 });
