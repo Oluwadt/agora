@@ -3,27 +3,36 @@ import Home from "../app/page";
 
 jest.mock("../app/components/ProductsArea", () => {
   return function MockProductsArea() {
-    return <section data-testid="products-area" />;
+    return (
+      <section data-testid="products-area">
+        Products Area
+      </section>
+    );
   };
 });
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
-    json: () =>
-      Promise.resolve([
-        { id: "1", name: "Laptop" },
-        { id: "2", name: "Phone" },
-      ]),
+    ok: true,
+    json: async () => ({
+      products: [],
+    }),
   })
 );
 
-describe("Home page", () => {
-  test("renders products area", async () => {
-    const view = await Home();
-    render(view);
+describe("Home page (server component)", () => {
+  it("renders without crashing and fetches products", async () => {
+    const page = await Home();
+    render(page);
+
+    expect(
+      screen.getByText(/welcome to agora/i)
+    ).toBeInTheDocument();
 
     expect(
       screen.getByTestId("products-area")
     ).toBeInTheDocument();
+
+    expect(global.fetch).toHaveBeenCalled();
   });
 });
